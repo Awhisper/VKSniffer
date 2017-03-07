@@ -135,7 +135,6 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
 }
 
 #pragma mark URLSessionTaskDelegate
-// MARK: URLSessionTaskDelegate
 
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
     if (error) {
@@ -147,8 +146,7 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     }
 }
 
-
-// MARK: URLSessionDataDelegate
+#pragma mark URLSessionDataDelegate
 
 -(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(nonnull NSURLResponse *)response completionHandler:(nonnull void (^)(NSURLSessionResponseDisposition))completionHandler{
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
