@@ -80,4 +80,12 @@ typedef void(^VKSnifferHandler)(VKSnifferResult *result);
 //option
 + (void)setupHostFilter:(NSString *)host;
 
+-(void)sniffRequestEnqueue:(VKSnifferRequestItem *)request;
+
+-(void)sniffRequestResponse:(VKSnifferResponseItem *)response;
+
+-(void)sniffRequestError:(VKSnifferErrorItem *)error;
+
+-(VKSnifferRequestItem *)sniffRequestDequeue:(NSInteger)requestId;
+
 @end

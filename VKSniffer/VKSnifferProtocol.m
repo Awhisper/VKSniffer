@@ -82,8 +82,7 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
 }
 
 - (void)stopLoading{
-    [VKSniffer singleton];
-    //
+    [[VKSniffer singleton] sniffRequestDequeue:[self requestIdentifier]];
     [self.internalSession invalidateAndCancel];
 }
 
@@ -109,8 +108,7 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     reqItem.identifier = [self requestIdentifier];
     reqItem.timeStamp = startStamp;
     reqItem.request = request;
-    //
-    
+    [[VKSniffer singleton]sniffRequestEnqueue:reqItem];
 }
 
 -(void)hookResponse:(NSHTTPURLResponse *)response Data:(NSData *)data Session:(NSURLSession *)session{
@@ -120,7 +118,8 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     responseItem.timeStamp = endStamp;
     responseItem.response = response;
     responseItem.session = session;
-    //
+    [[VKSniffer singleton]sniffRequestDequeue:responseItem.identifier];
+    [[VKSniffer singleton]sniffRequestResponse:responseItem];
 }
 
 -(void)hookError:(NSError *)error Response:(NSHTTPURLResponse *)response Data:(NSData *)data Session:(NSURLSession *)session{
@@ -131,7 +130,8 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     errorItem.response = response;
     errorItem.session = session;
     errorItem.error = error;
-    //
+    [[VKSniffer singleton]sniffRequestDequeue:errorItem.identifier];
+    [[VKSniffer singleton]sniffRequestError:errorItem];
 }
 
 #pragma mark URLSessionTaskDelegate

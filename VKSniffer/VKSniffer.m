@@ -12,6 +12,8 @@
 
 @property (nonatomic,strong) VKSnifferHandler Snifferhandler;
 
+@property(atomic,strong) NSMutableArray<VKSnifferRequestItem *> * netRequestArray;
+
 @property(atomic,strong) NSMutableArray<VKSnifferResult *>* netResultArray;
 
 @end
@@ -40,6 +42,7 @@ static id __singleton__;
     if (self) {
         self.enableSniffer = NO;
         self.netResultArray = [[NSMutableArray alloc]init];
+        self.netRequestArray = [[NSMutableArray alloc]init];
     }
     return self;
 }
@@ -70,5 +73,40 @@ static id __singleton__;
     [VKSniffer singleton].enableSniffer = YES;
     [NSURLProtocol registerClass:[VKSnifferProtocol class]];
 }
+
+#pragma mark logic
+
+-(void)sniffRequestEnqueue:(VKSnifferRequestItem *)request
+{
+    if (request) {
+        [self.netRequestArray addObject:request];
+    }
+}
+
+-(void)sniffRequestResponse:(VKSnifferResponseItem *)response{
+    
+}
+
+-(void)sniffRequestError:(VKSnifferErrorItem *)error{
+    
+}
+
+-(VKSnifferRequestItem *)sniffRequestDequeue:(NSInteger)requestId{
+    NSInteger reqId;
+    VKSnifferRequestItem *reqItem;
+    for (VKSnifferRequestItem* req in self.netRequestArray) {
+        if (req.identifier == requestId) {
+            reqId = req.identifier;
+            reqItem = req;
+            break;
+        }
+    }
+    if (reqItem) {
+        [self.netRequestArray removeObject:reqItem];
+        return reqItem;
+    }
+    return nil;
+}
+
 
 @end

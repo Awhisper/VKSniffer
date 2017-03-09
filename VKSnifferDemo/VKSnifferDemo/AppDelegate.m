@@ -19,7 +19,6 @@
     // Override point for customization after application launch.
     [VKSniffer setupSnifferHandler:^(VKSnifferResult *result) {
         
-        
     }];
     return YES;
 }
