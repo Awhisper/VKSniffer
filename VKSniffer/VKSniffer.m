@@ -8,6 +8,30 @@
 
 #import "VKSniffer.h"
 #import "VKSnifferProtocol.h"
+
+#define VKMAXSNIFFERPRECORD 100
+
+@implementation VKSnifferRequestItem
+
+
+@end
+
+@implementation VKSnifferResponseItem
+
+
+@end
+
+@implementation VKSnifferErrorItem
+
+
+@end
+
+@implementation VKSnifferResult
+
+
+@end
+
+
 @interface VKSniffer ()
 
 @property (nonatomic,strong) VKSnifferHandler Snifferhandler;
@@ -83,30 +107,72 @@ static id __singleton__;
     }
 }
 
--(void)sniffRequestResponse:(VKSnifferResponseItem *)response{
-    
-}
-
--(void)sniffRequestError:(VKSnifferErrorItem *)error{
-    
-}
-
--(VKSnifferRequestItem *)sniffRequestDequeue:(NSInteger)requestId{
-    NSInteger reqId;
-    VKSnifferRequestItem *reqItem;
-    for (VKSnifferRequestItem* req in self.netRequestArray) {
-        if (req.identifier == requestId) {
-            reqId = req.identifier;
-            reqItem = req;
+-(VKSnifferRequestItem *)sniffRequestDequeue:(NSInteger)requestId
+{
+    VKSnifferRequestItem *request;
+    for (VKSnifferRequestItem* item in self.netRequestArray) {
+        if (item.identifier == requestId) {
+            request = item;
             break;
         }
     }
-    if (reqItem) {
-        [self.netRequestArray removeObject:reqItem];
-        return reqItem;
-    }
-    return nil;
+    return request;
 }
 
+-(void)sniffRequestResponse:(VKSnifferResponseItem *)response{
+    VKSnifferRequestItem *request = [self sniffRequestDequeue:response.identifier];
+    NSTimeInterval timeInterval = response.timeStamp - request.timeStamp;
+    VKSnifferResult *result = [[VKSnifferResult alloc]init];
+    result.request = request.request;
+    result.response = response.response;
+    result.error = nil;
+    result.session = response.session;
+    result.duration = timeInterval;
+    [self postSnifferResult:result];
+}
+
+-(void)sniffRequestError:(VKSnifferErrorItem *)error{
+    VKSnifferRequestItem *request = [self sniffRequestDequeue:error.identifier];
+    NSTimeInterval timeInterval = error.timeStamp - request.timeStamp;
+    VKSnifferResult *result = [[VKSnifferResult alloc]init];
+    result.request = request.request;
+    result.response = error.response;
+    result.error = error.error;
+    result.session = error.session;
+    result.duration = timeInterval;
+    [self postSnifferResult:result];
+}
+
+-(void)postSnifferResult:(VKSnifferResult *)result{
+    
+    
+    @synchronized([VKSniffer singleton]) {
+        if (result) {
+            
+            [[VKSniffer singleton].netResultArray addObject:result];
+            
+            if ([[VKSniffer singleton].netResultArray count] > VKMAXSNIFFERPRECORD) {
+                NSInteger nowCount = [VKSniffer singleton].netResultArray.count;
+                [[VKSniffer singleton].netResultArray removeObjectsInRange:NSMakeRange(0, nowCount - VKMAXSNIFFERPRECORD)];
+            }
+            if ([NSThread isMainThread]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:VKNetSnifferReqLogNotification object:result];
+                if (self.Snifferhandler) {
+                    self.Snifferhandler(result);
+                }
+            }else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter]postNotificationName:VKNetSnifferReqLogNotification object:result];
+                    if (self.Snifferhandler) {
+                        self.Snifferhandler(result);
+                    }
+                });
+            }
+        }
+        
+    }
+
+    
+}
 
 @end

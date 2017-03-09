@@ -118,7 +118,6 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     responseItem.timeStamp = endStamp;
     responseItem.response = response;
     responseItem.session = session;
-    [[VKSniffer singleton]sniffRequestDequeue:responseItem.identifier];
     [[VKSniffer singleton]sniffRequestResponse:responseItem];
 }
 
@@ -130,7 +129,6 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     errorItem.response = response;
     errorItem.session = session;
     errorItem.error = error;
-    [[VKSniffer singleton]sniffRequestDequeue:errorItem.identifier];
     [[VKSniffer singleton]sniffRequestError:errorItem];
 }
 

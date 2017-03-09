@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
+#define VKNetSnifferReqLogNotification @"VKNetSnifferReqLogNotification"
+
 @interface VKSnifferRequestItem : NSObject
 
 @property (nonatomic,assign) NSInteger identifier;
@@ -55,7 +58,7 @@
 
 @property (nonatomic,strong) NSURLSession *session;
 
-@property (nonatomic,assign) CGFloat duration;
+@property (nonatomic,assign) NSTimeInterval duration;
 
 @end
 
