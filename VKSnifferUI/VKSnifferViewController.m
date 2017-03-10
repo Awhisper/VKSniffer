@@ -148,6 +148,7 @@
     }
     
     [actionSheet addButtonWithTitle:@"Change Filter"];
+    [actionSheet addButtonWithTitle:@"Remove All"];
     [actionSheet addButtonWithTitle:@"Cancel"];
     actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
@@ -171,6 +172,12 @@
             UITextField *nameField = [inputbox textFieldAtIndex:0];
             nameField.placeholder = @"域名过滤器";
             [inputbox show];
+        }
+            break;
+        case 2:
+        {
+            [VKSniffer removeSnifferResult];
+            [self.requestTable reloadData];
         }
             break;
         default:

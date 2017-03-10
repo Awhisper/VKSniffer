@@ -83,19 +83,13 @@ typedef void(^VKSnifferHandler)(VKSnifferResult *result);
 
 + (void)startSniffer;
 
++ (void)removeSnifferResult;
+
 //Afnetworking 3.0 need
 + (void)setupConfiguration:(NSURLSessionConfiguration *)config;
 //option
 + (void)setupSnifferHandler:(VKSnifferHandler)callback;
 //option
 + (void)setupHostFilter:(NSString *)host;
-
--(void)sniffRequestEnqueue:(VKSnifferRequestItem *)request;
-
--(void)sniffRequestResponse:(VKSnifferResponseItem *)response;
-
--(void)sniffRequestError:(VKSnifferErrorItem *)error;
-
--(VKSnifferRequestItem *)sniffRequestDequeue:(NSInteger)requestId;
 
 @end

@@ -7,8 +7,6 @@
 //
 
 #import "VKSnifferProtocol.h"
-#import "VKSniffer.h"
-
 
 static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
 

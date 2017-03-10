@@ -7,6 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VKSniffer.h"
+@interface VKSniffer (NSURLProtocol)
+
+-(void)sniffRequestEnqueue:(VKSnifferRequestItem *)request;
+
+-(void)sniffRequestResponse:(VKSnifferResponseItem *)response;
+
+-(void)sniffRequestError:(VKSnifferErrorItem *)error;
+
+-(VKSnifferRequestItem *)sniffRequestDequeue:(NSInteger)requestId;
+
+@end
 
 @interface VKSnifferProtocol : NSURLProtocol
 
