@@ -41,7 +41,7 @@
 
 #pragma mark tableview
 -(void)setupTableView{
-    _requestTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 20)];
+    _requestTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 20)];
     _requestTable.delegate = self;
     _requestTable.dataSource = self;
     _requestTable.backgroundColor = [UIColor clearColor];
@@ -109,21 +109,34 @@
 #pragma mark navigationbar
 -(void)setupNavigationBar{
     
+    UILabel *titlelb = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, [UIScreen mainScreen].bounds.size.width, 44)];
+    titlelb.textColor = [UIColor whiteColor];
+    titlelb.text = @"VKSniffer";
+    [self.view addSubview:titlelb];
+    titlelb.textAlignment = NSTextAlignmentCenter;
+    titlelb.font = [UIFont boldSystemFontOfSize:titlelb.font.pointSize];
+    
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 50, 40);
+    CGFloat x = [UIScreen mainScreen].bounds.size.width - 50 - 20;
+    rightButton.frame = CGRectMake(x, 20, 50, 44);
     [rightButton setTitle:@"Menu" forState:UIControlStateNormal];
-    [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(clickMenu) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
+   
+    [self.view addSubview:rightButton];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 50, 40);
+    leftButton.frame = CGRectMake(10, 20, 50, 44);
     [leftButton setTitle:@"Exit" forState:UIControlStateNormal];
-    [leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(clicExit) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    [self.view addSubview:leftButton];
+    
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 64,  [UIScreen mainScreen].bounds.size.width, 0.5f)];
+    line.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:line];
+    
 }
 
 -(void)clicExit{

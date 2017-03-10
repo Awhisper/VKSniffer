@@ -32,13 +32,13 @@
 -(void)setup{
     self.backgroundColor = [UIColor clearColor];
     self.clipsToBounds = true;
-    self.windowLevel = UIWindowLevelStatusBar - 1;
+    self.windowLevel = UIWindowLevelStatusBar + 1;
     [self setupRootViewController];
 }
 
 -(void)setupRootViewController{
     self.snifferVC = [[VKSnifferViewController alloc]init];
-    self.rootViewController = [[UINavigationController alloc]initWithRootViewController:self.snifferVC];
+    self.rootViewController = self.snifferVC;
     self.rootViewController.view.alpha = 0;
 }
 
