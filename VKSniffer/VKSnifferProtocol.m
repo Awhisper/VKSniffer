@@ -118,6 +118,7 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     responseItem.timeStamp = endStamp;
     responseItem.response = response;
     responseItem.session = session;
+    responseItem.data = data;
     [[VKSniffer singleton]sniffRequestResponse:responseItem];
 }
 

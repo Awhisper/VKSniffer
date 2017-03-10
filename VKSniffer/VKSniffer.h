@@ -20,6 +20,7 @@
 
 @property (nonatomic,strong) NSURLRequest *request;
 
+
 @end
 
 @interface VKSnifferResponseItem : NSObject
@@ -31,6 +32,8 @@
 @property (nonatomic,strong) NSHTTPURLResponse *response;
 
 @property (nonatomic,strong) NSURLSession *session;
+
+@property (nonatomic,strong) NSData *data;
 
 @end
 
@@ -60,6 +63,8 @@
 
 @property (nonatomic,assign) NSTimeInterval duration;
 
+@property (nonatomic,strong) NSData *data;
+
 @end
 
 typedef void(^VKSnifferHandler)(VKSnifferResult *result);
@@ -69,6 +74,8 @@ typedef void(^VKSnifferHandler)(VKSnifferResult *result);
 @property (nonatomic,assign) BOOL enableSniffer;
 
 @property(nonatomic,strong) NSString* hostFilter;
+
+@property(atomic,strong) NSMutableArray<VKSnifferResult *>* netResultArray;
 
 - (instancetype)sharedInstance;
 

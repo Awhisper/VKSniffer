@@ -39,8 +39,6 @@
 
 @property(atomic,strong) NSMutableArray<VKSnifferRequestItem *> * netRequestArray;
 
-@property(atomic,strong) NSMutableArray<VKSnifferResult *>* netResultArray;
-
 @end
 
 @implementation VKSniffer
@@ -128,6 +126,7 @@ static id __singleton__;
     result.request = request.request;
     result.response = response.response;
     result.error = nil;
+    result.data = response.data;
     result.session = response.session;
     result.duration = timeInterval;
     [self postSnifferResult:result];

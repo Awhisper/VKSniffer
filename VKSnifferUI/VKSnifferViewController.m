@@ -14,9 +14,13 @@
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 
-@interface VKSnifferViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
+@interface VKSnifferViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) UIActionSheet *actionSheet;
+
+@property (nonatomic,strong) UITableView *requestTable;
+
+@property (nonatomic,strong) NSString *pasteboardString;
 
 @end
 
@@ -25,20 +29,82 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"VKSniffer Panel";
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor blackColor];
     [self setupNavigationBar];
     [self setupTableView];
     // Do any additional setup after loading the view.
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    self.view.backgroundColor = [UIColor greenColor];
+    
 }
 
 #pragma mark tableview
 -(void)setupTableView{
-    
+    _requestTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 20)];
+    _requestTable.delegate = self;
+    _requestTable.dataSource = self;
+    _requestTable.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_requestTable];
 }
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [VKSniffer singleton].netResultArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *resultArr = [VKSniffer singleton].netResultArray;
+    NSString *requestID = @"VKSnifferCellID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:requestID];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:requestID];
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
+    }
+    if (indexPath.row < resultArr.count) {
+        VKSnifferResult *result = resultArr[indexPath.row];
+        cell.textLabel.text = result.request.URL.absoluteString;
+    }
+    cell.backgroundColor = [UIColor clearColor];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *resultArr = [VKSniffer singleton].netResultArray;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    VKSnifferResult *result = resultArr[indexPath.row];
+    NSString *strurl = result.request.URL.absoluteString;
+    NSData *reqData = result.data;
+    NSString *strdata = [[NSJSONSerialization JSONObjectWithData:reqData options:kNilOptions error:nil] description];
+    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"返回数据" message:strdata delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"复制", nil];
+    [alert show];
+    
+    NSString *pasteboardstr = [NSString stringWithFormat:@"URL: %@ \n\n Data: %@",strurl,strdata];
+    self.pasteboardString = pasteboardstr;
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (self.pasteboardString) {
+        if (buttonIndex == 1) {//复制
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = self.pasteboardString;
+        }
+    }else{
+        [self alertView:alertView clickedMenuButtonAtIndex:buttonIndex];
+    }
+    self.pasteboardString = nil;
+}
+
 
 #pragma mark navigationbar
 -(void)setupNavigationBar{
@@ -113,7 +179,7 @@
     _actionSheet = nil;
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+-(void)alertView:(UIAlertView *)alertView clickedMenuButtonAtIndex:(NSInteger)buttonIndex{
 
     if (buttonIndex == alertView.firstOtherButtonIndex) {
         UITextField *nameField = [alertView textFieldAtIndex:0];
