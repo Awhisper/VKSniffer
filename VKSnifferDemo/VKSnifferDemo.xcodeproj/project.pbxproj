@@ -15,6 +15,9 @@
 		6CA85A7B1E6D538B00FD9EDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CA85A791E6D538B00FD9EDF /* LaunchScreen.storyboard */; };
 		6CA85A851E6D53F800FD9EDF /* VKSniffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A841E6D53F800FD9EDF /* VKSniffer.m */; };
 		6CA85A881E6D541200FD9EDF /* VKSnifferProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A871E6D541200FD9EDF /* VKSnifferProtocol.m */; };
+		6CA85A951E7296D100FD9EDF /* VKSnifferWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A941E7296D100FD9EDF /* VKSnifferWindow.m */; };
+		6CA85A981E7296E200FD9EDF /* VKSnifferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A971E7296E200FD9EDF /* VKSnifferViewController.m */; };
+		6CA85A9B1E72C3BA00FD9EDF /* VKSniffer+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A9A1E72C3BA00FD9EDF /* VKSniffer+UI.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,12 @@
 		6CA85A841E6D53F800FD9EDF /* VKSniffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKSniffer.m; sourceTree = "<group>"; };
 		6CA85A861E6D541200FD9EDF /* VKSnifferProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKSnifferProtocol.h; sourceTree = "<group>"; };
 		6CA85A871E6D541200FD9EDF /* VKSnifferProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKSnifferProtocol.m; sourceTree = "<group>"; };
+		6CA85A931E7296D100FD9EDF /* VKSnifferWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKSnifferWindow.h; sourceTree = "<group>"; };
+		6CA85A941E7296D100FD9EDF /* VKSnifferWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKSnifferWindow.m; sourceTree = "<group>"; };
+		6CA85A961E7296E200FD9EDF /* VKSnifferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKSnifferViewController.h; sourceTree = "<group>"; };
+		6CA85A971E7296E200FD9EDF /* VKSnifferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKSnifferViewController.m; sourceTree = "<group>"; };
+		6CA85A991E72C3BA00FD9EDF /* VKSniffer+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VKSniffer+UI.h"; sourceTree = "<group>"; };
+		6CA85A9A1E72C3BA00FD9EDF /* VKSniffer+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VKSniffer+UI.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +57,7 @@
 		6CA85A5F1E6D538B00FD9EDF = {
 			isa = PBXGroup;
 			children = (
+				6CA85A911E71280900FD9EDF /* VKSnifferUI */,
 				6CA85A821E6D53A400FD9EDF /* VKSniffer */,
 				6CA85A6A1E6D538B00FD9EDF /* VKSnifferDemo */,
 				6CA85A691E6D538B00FD9EDF /* Products */,
@@ -96,6 +106,20 @@
 			);
 			name = VKSniffer;
 			path = ../VKSniffer;
+			sourceTree = "<group>";
+		};
+		6CA85A911E71280900FD9EDF /* VKSnifferUI */ = {
+			isa = PBXGroup;
+			children = (
+				6CA85A931E7296D100FD9EDF /* VKSnifferWindow.h */,
+				6CA85A941E7296D100FD9EDF /* VKSnifferWindow.m */,
+				6CA85A961E7296E200FD9EDF /* VKSnifferViewController.h */,
+				6CA85A971E7296E200FD9EDF /* VKSnifferViewController.m */,
+				6CA85A991E72C3BA00FD9EDF /* VKSniffer+UI.h */,
+				6CA85A9A1E72C3BA00FD9EDF /* VKSniffer+UI.m */,
+			);
+			name = VKSnifferUI;
+			path = ../VKSnifferUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,8 +193,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CA85A9B1E72C3BA00FD9EDF /* VKSniffer+UI.m in Sources */,
+				6CA85A951E7296D100FD9EDF /* VKSnifferWindow.m in Sources */,
 				6CA85A851E6D53F800FD9EDF /* VKSniffer.m in Sources */,
 				6CA85A731E6D538B00FD9EDF /* ViewController.m in Sources */,
+				6CA85A981E7296E200FD9EDF /* VKSnifferViewController.m in Sources */,
 				6CA85A701E6D538B00FD9EDF /* AppDelegate.m in Sources */,
 				6CA85A6D1E6D538B00FD9EDF /* main.m in Sources */,
 				6CA85A881E6D541200FD9EDF /* VKSnifferProtocol.m in Sources */,
@@ -330,6 +357,7 @@
 				6CA85A811E6D538B00FD9EDF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

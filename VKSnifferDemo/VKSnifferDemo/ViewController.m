@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "VKSniffer+UI.h"
 @interface ViewController ()
 
 @end
@@ -47,6 +47,16 @@
     [task2 resume];
     [task1 resume];
 
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [VKSniffer showSnifferView];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [VKSniffer hideSnifferView];
+        
+    });
 }
 
 

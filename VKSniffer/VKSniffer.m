@@ -8,6 +8,7 @@
 
 #import "VKSniffer.h"
 #import "VKSnifferProtocol.h"
+#import "VKSnifferWindow.h"
 
 #define VKMAXSNIFFERPRECORD 100
 
@@ -97,6 +98,7 @@ static id __singleton__;
     [VKSniffer singleton].enableSniffer = YES;
     [NSURLProtocol registerClass:[VKSnifferProtocol class]];
 }
+
 
 #pragma mark logic
 
