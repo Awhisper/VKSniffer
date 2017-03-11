@@ -73,8 +73,6 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    VKSniffer *a = [VKSniffer singleton];
-    NSArray *ab = a.netResultArray;
     return [VKSniffer singleton].netResultArray.count;
 }
 
@@ -114,10 +112,24 @@
     NSString *strurl = result.request.URL.absoluteString;
     NSData *reqData = result.data;
     NSString *strdata = [[NSJSONSerialization JSONObjectWithData:reqData options:kNilOptions error:nil] description];
-    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"返回数据" message:strdata delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"复制", nil];
+    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Response Detail" message:strdata delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Copy", nil];
     [alert show];
     
-    NSString *pasteboardstr = [NSString stringWithFormat:@"URL: %@ \n\n Data: %@",strurl,strdata];
+    NSMutableString *pstr = [[NSMutableString alloc]initWithString:@""];
+    [pstr appendString:@"URL: - "];
+    [pstr appendString:result.request.URL.absoluteString];
+    [pstr appendString:@"\r\n"];
+    
+    NSString * statusStr = (result.response.statusCode >= 200 && result.response.statusCode < 300) ? @"Success" : @"Error";
+    statusStr = [NSString stringWithFormat:@"%@ Code: %@",statusStr,@(result.response.statusCode)];
+    [pstr appendString:statusStr];
+    [pstr appendString:@"\r\n"];
+
+    NSTimeInterval ms = result.duration * 1000.0f;
+    NSString *timeStr = [NSString stringWithFormat:@"Time: %.2f ms",ms];
+    [pstr appendString:timeStr];
+    
+    NSString *pasteboardstr = [pstr copy];
     self.pasteboardString = pasteboardstr;
 }
 

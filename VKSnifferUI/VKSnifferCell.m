@@ -58,7 +58,7 @@ static CGFloat VKSnifferMaxLabelLineHeight = 15;
 //    [self.contentView addSubview:urllb];
     
     UILabel *statusLb = [[UILabel alloc]initWithFrame:CGRectMake(10, secondLineTop, VKSnifferCellUrlWidth, VKSnifferMaxLabelLineHeight)];
-    statusLb.textColor = [UIColor whiteColor];
+    statusLb.textColor = [UIColor greenColor];
     statusLb.numberOfLines = 1;
     statusLb.textAlignment = NSTextAlignmentLeft;
     statusLb.font = [UIFont systemFontOfSize:VKSnifferMaxUrlFontSize];
@@ -97,7 +97,7 @@ static CGFloat VKSnifferMaxLabelLineHeight = 15;
     self.statusLabel.text = [NSString stringWithFormat:@"%@: - %@",statusStr,@(result.response.statusCode)];
     
     if ([statusStr isEqualToString:@"SUCCESS"]) {
-        self.statusLabel.textColor = [UIColor whiteColor];
+        self.statusLabel.textColor = [UIColor greenColor];
     }else{
         self.statusLabel.textColor = [UIColor redColor];
     }
