@@ -9,7 +9,7 @@
 #import "VKSnifferWindow.h"
 #import "VKSnifferViewController.h"
 
-#define VKSnifferViewAlpha 0.7f
+#define VKSnifferViewAlpha 0.8f
 
 @interface VKSnifferWindow ()
 

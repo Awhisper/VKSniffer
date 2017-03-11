@@ -8,10 +8,13 @@
 
 #import "VKSnifferViewController.h"
 #import "VKSniffer+UI.h"
-
+#import "VKSnifferCell.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
+#define VKSnifferViewControllerUIWidth ([[UIScreen mainScreen] bounds].size.width)
+#define VKSnifferViewControllerUIHeight ([[UIScreen mainScreen] bounds].size.height)
 
 
 @interface VKSnifferViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -32,16 +35,36 @@
     self.view.backgroundColor = [UIColor blackColor];
     [self setupNavigationBar];
     [self setupTableView];
+    [self addLogNotificationObserver];
     // Do any additional setup after loading the view.
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+    [self.requestTable reloadData];
+}
+
+-(void)dealloc
+{
+    [self removeLogNotificationObserver];
+}
+#pragma mark notification
+-(void)addLogNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logNotificationGet:) name:VKNetSnifferReqLogNotification object:nil];
+}
+
+-(void)removeLogNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)logNotificationGet:(NSNotification *)noti{
+    [self.requestTable reloadData];
 }
 
 #pragma mark tableview
 -(void)setupTableView{
-    _requestTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 20)];
+    _requestTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64,VKSnifferViewControllerUIWidth, VKSnifferViewControllerUIHeight - 20)];
     _requestTable.delegate = self;
     _requestTable.dataSource = self;
     _requestTable.backgroundColor = [UIColor clearColor];
@@ -50,29 +73,26 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    VKSniffer *a = [VKSniffer singleton];
+    NSArray *ab = a.netResultArray;
     return [VKSniffer singleton].netResultArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return VKSnifferCellHeight;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *resultArr = [VKSniffer singleton].netResultArray;
     NSString *requestID = @"VKSnifferCellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:requestID];
+    VKSnifferCell *cell = [tableView dequeueReusableCellWithIdentifier:requestID];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:requestID];
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
+        cell = [[VKSnifferCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:requestID];
     }
-    if (indexPath.row < resultArr.count) {
-        VKSnifferResult *result = resultArr[indexPath.row];
-        cell.textLabel.text = result.request.URL.absoluteString;
-    }
+    VKSnifferResult *result = resultArr[indexPath.row];
+    [cell setSnifferResult:result];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
@@ -109,7 +129,7 @@
 #pragma mark navigationbar
 -(void)setupNavigationBar{
     
-    UILabel *titlelb = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, [UIScreen mainScreen].bounds.size.width, 44)];
+    UILabel *titlelb = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, VKSnifferViewControllerUIWidth, 44)];
     titlelb.textColor = [UIColor whiteColor];
     titlelb.text = @"VKSniffer";
     [self.view addSubview:titlelb];
@@ -117,7 +137,7 @@
     titlelb.font = [UIFont boldSystemFontOfSize:titlelb.font.pointSize];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat x = [UIScreen mainScreen].bounds.size.width - 50 - 20;
+    CGFloat x = VKSnifferViewControllerUIWidth - 50 - 20;
     rightButton.frame = CGRectMake(x, 20, 50, 44);
     [rightButton setTitle:@"Menu" forState:UIControlStateNormal];
     [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -133,7 +153,7 @@
     [self.view addSubview:leftButton];
     
     
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 64,  [UIScreen mainScreen].bounds.size.width, 0.5f)];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 64,  VKSnifferViewControllerUIWidth, 0.5f)];
     line.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:line];
     
