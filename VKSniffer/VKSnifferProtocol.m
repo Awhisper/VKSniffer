@@ -93,9 +93,9 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     return _internalResponseData;
 }
 
--(NSInteger)requestIdentifier{
+-(NSUInteger)requestIdentifier{
     if (self.internalTask && self.internalTask.originalRequest) {
-        return self.internalTask.originalRequest.hash;
+        return self.hash;
     }
     return 0;
 }

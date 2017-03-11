@@ -97,7 +97,7 @@
 }
 
 -(void)timertimer{
-    [self commenSessionTaskTest];
+    [self commenConnectionTest];
 }
 
 

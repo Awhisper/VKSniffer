@@ -25,7 +25,7 @@
 
 @interface VKSnifferResponseItem : NSObject
 
-@property (nonatomic,assign) NSInteger identifier;
+@property (nonatomic,assign) NSUInteger identifier;
 
 @property (nonatomic,assign) NSTimeInterval timeStamp;
 
