@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [VKSniffer setupSnifferHandler:^(VKSnifferResult *result) {
-        NSLog(@"11");
+        NSLog(@"%@",result);
     }];
     [VKSniffer startSniffer];
     return YES;

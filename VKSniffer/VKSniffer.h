@@ -65,6 +65,8 @@
 
 @property (nonatomic,strong) NSData *data;
 
+-(NSString *)detailInfo;
+
 @end
 
 typedef void(^VKSnifferHandler)(VKSnifferResult *result);

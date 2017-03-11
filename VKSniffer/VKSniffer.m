@@ -29,7 +29,38 @@
 
 @implementation VKSnifferResult
 
+-(NSString *)description
+{
+    NSMutableString *pstr = [[NSMutableString alloc]initWithString:@""];
+    [pstr appendString:@"URL: - "];
+    [pstr appendString:self.request.URL.absoluteString];
+    [pstr appendString:@"\r\n"];
+    
+    NSString * statusStr = (self.response.statusCode >= 200 && self.response.statusCode < 300) ? @"Success" : @"Error";
+    statusStr = [NSString stringWithFormat:@"%@ Code: %@",statusStr,@(self.response.statusCode)];
+    [pstr appendString:statusStr];
+    [pstr appendString:@"\r\n"];
+    
+    NSTimeInterval ms = self.duration * 1000.0f;
+    NSString *timeStr = [NSString stringWithFormat:@"Time: %.2f ms",ms];
+    [pstr appendString:timeStr];
+    [pstr appendString:@"\r\n"];
+    
+    if (self.data) {
+        NSString *dataStr = [[NSJSONSerialization JSONObjectWithData:self.data options:kNilOptions error:nil] description];
+        [pstr appendString:@"responeData:"];
+        [pstr appendString:@"\r\n"];
+        [pstr appendString:dataStr];
+        [pstr appendString:@"\r\n"];
+    }
+    
+    
+    return [pstr copy];
+}
 
+-(NSString *)detailInfo{
+    return self.description;
+}
 @end
 
 
