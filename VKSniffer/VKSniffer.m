@@ -10,7 +10,7 @@
 #import "VKSnifferProtocol.h"
 #import "VKSnifferWindow.h"
 
-#define VKMAXSNIFFERPRECORD 100
+#define VKMAXSNIFFERPRECORD 50
 
 @implementation VKSnifferRequestItem
 

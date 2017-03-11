@@ -14,6 +14,8 @@
 
 @property(nonatomic,strong) VKSnifferWindow *snifferWindow;
 
+@property (nonatomic,strong) NSNumber *isReverse;
+
 + (void)showSnifferView;
 
 + (void)hideSnifferView;

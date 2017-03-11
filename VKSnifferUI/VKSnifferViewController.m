@@ -25,6 +25,10 @@
 
 @property (nonatomic,strong) NSString *pasteboardString;
 
+@property (nonatomic,assign) BOOL isReverse;
+
+@property (nonatomic,strong) NSMutableArray<VKSnifferResult *>* dataArr;
+
 @end
 
 @implementation VKSnifferViewController
@@ -36,11 +40,25 @@
     [self setupNavigationBar];
     [self setupTableView];
     [self addLogNotificationObserver];
+    self.dataArr = [[VKSniffer singleton].netResultArray mutableCopy];
     // Do any additional setup after loading the view.
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self.requestTable reloadData];
+}
+
+-(void)setIsReverse:(BOOL)isReverse{
+    [VKSniffer singleton].isReverse = @(isReverse);
+}
+
+-(BOOL)isReverse
+{
+    if ([VKSniffer singleton].isReverse) {
+        return [[VKSniffer singleton].isReverse boolValue];
+    }else{
+        return YES; //default
+    }
 }
 
 -(void)dealloc
@@ -59,7 +77,11 @@
 }
 
 -(void)logNotificationGet:(NSNotification *)noti{
-    [self.requestTable reloadData];
+    VKSnifferResult *result = noti.object;
+    if (result) {
+        [self.dataArr addObject:result];
+        [self.requestTable reloadData];
+    }
 }
 
 #pragma mark tableview
@@ -71,15 +93,25 @@
     [self.view addSubview:_requestTable];
 }
 
+-(NSInteger)tableViewConvertIndexPath:(NSIndexPath *)indexPath{
+    if (self.isReverse) {
+        NSInteger index = self.dataArr.count - indexPath.row - 1;
+        return index>=0?index:0;
+    }else{
+        return indexPath.row;
+    }
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [VKSniffer singleton].netResultArray.count;
+    return self.dataArr.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *resultArr = [VKSniffer singleton].netResultArray;
-    VKSnifferResult *result = resultArr[indexPath.row];
+    NSInteger trueIndex = [self tableViewConvertIndexPath:indexPath];
+    NSArray *resultArr = self.dataArr;
+    VKSnifferResult *result = resultArr[trueIndex];
     if (result.cellHeightCache) {
         return [result.cellHeightCache floatValue];
     }else{
@@ -92,13 +124,14 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *resultArr = [VKSniffer singleton].netResultArray;
+    NSArray *resultArr = self.dataArr;
     NSString *requestID = @"VKSnifferCellID";
     VKSnifferCell *cell = [tableView dequeueReusableCellWithIdentifier:requestID];
     if (!cell) {
         cell = [[VKSnifferCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:requestID];
     }
-    VKSnifferResult *result = resultArr[indexPath.row];
+    NSInteger trueIndex = [self tableViewConvertIndexPath:indexPath];
+    VKSnifferResult *result = resultArr[trueIndex];
     [cell setSnifferResult:result];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
@@ -106,9 +139,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *resultArr = [VKSniffer singleton].netResultArray;
+    NSInteger trueIndex = [self tableViewConvertIndexPath:indexPath];
+    NSArray *resultArr = self.dataArr;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    VKSnifferResult *result = resultArr[indexPath.row];
+    VKSnifferResult *result = resultArr[trueIndex];
     NSData *reqData = result.data;
     NSString *strdata = [[NSJSONSerialization JSONObjectWithData:reqData options:kNilOptions error:nil] description];
     UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Response Detail" message:strdata delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Copy", nil];
@@ -187,6 +221,11 @@
     
     [actionSheet addButtonWithTitle:@"Change Filter"];
     [actionSheet addButtonWithTitle:@"Remove All"];
+    if (self.isReverse) {
+        [actionSheet addButtonWithTitle:@"Forward Sequence"];
+    }else{
+        [actionSheet addButtonWithTitle:@"Reverse Sequence"];
+    }
     [actionSheet addButtonWithTitle:@"Cancel"];
     actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
@@ -215,6 +254,12 @@
         case 2:
         {
             [VKSniffer removeSnifferResult];
+            [self.requestTable reloadData];
+        }
+            break;
+        case 3:
+        {
+            self.isReverse = !self.isReverse;
             [self.requestTable reloadData];
         }
             break;

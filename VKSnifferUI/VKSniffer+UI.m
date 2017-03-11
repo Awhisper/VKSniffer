@@ -20,6 +20,15 @@
     objc_setAssociatedObject(self, @selector(snifferWindow), snifferWindow, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+-(NSNumber *)isReverse{
+    return objc_getAssociatedObject(self, @selector(isReverse));
+}
+
+-(void)setIsReverse:(NSNumber *)isReverse{
+    objc_setAssociatedObject(self, @selector(isReverse), isReverse, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+
 +(void)showSnifferView{
     [VKSniffer singleton].snifferWindow = [VKSnifferWindow showSnifferView];
 }
