@@ -10,6 +10,8 @@
 
 @interface VKSnifferResult (UI)
 
+@property (nonatomic,strong) NSNumber* cellHeightCache;
+//未开发完成
 @property (nonatomic,strong) NSNumber* isShowDetail;
 
 @end

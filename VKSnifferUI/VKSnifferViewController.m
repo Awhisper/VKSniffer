@@ -80,6 +80,15 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray *resultArr = [VKSniffer singleton].netResultArray;
+    VKSnifferResult *result = resultArr[indexPath.row];
+    if (result.cellHeightCache) {
+        return [result.cellHeightCache floatValue];
+    }else{
+        CGFloat cellheight = [VKSnifferCell caculateSnifferResultHeight:result];
+        result.cellHeightCache = [NSNumber numberWithFloat:cellheight];
+        return cellheight;
+    }
     return VKSnifferCellHeight;
 }
 

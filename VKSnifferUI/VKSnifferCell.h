@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "VKSnifferResult+UI.h"
 
-#define VKSnifferCellHeight 100
+#define VKSnifferCellHeight 60
 
 @interface VKSnifferCell : UITableViewCell
 
 - (void)setSnifferResult:(VKSnifferResult *)result;
+
++ (CGFloat)caculateSnifferResultHeight:(VKSnifferResult *)result;
 
 @end

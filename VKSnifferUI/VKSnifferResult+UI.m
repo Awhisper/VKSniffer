@@ -19,4 +19,12 @@
     objc_setAssociatedObject(self, @selector(isShowDetail), isShowDetail, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+-(NSNumber *)cellHeightCache{
+    return objc_getAssociatedObject(self, @selector(cellHeightCache));
+}
+
+-(void)setCellHeightCache:(NSNumber *)cellHeightCache{
+    objc_setAssociatedObject(self, @selector(cellHeightCache), cellHeightCache, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @end
