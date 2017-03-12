@@ -128,10 +128,6 @@ static id __singleton__;
     [NSURLProtocol registerClass:[VKSnifferProtocol class]];
 }
 
-+(void)removeSnifferResult{
-    [[VKSniffer singleton].netResultArray removeAllObjects];
-}
-
 #pragma mark logic
 
 -(void)sniffRequestEnqueue:(VKSnifferRequestItem *)request

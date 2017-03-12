@@ -253,7 +253,7 @@
             break;
         case 2:
         {
-            [VKSniffer removeSnifferResult];
+            [self.dataArr removeAllObjects];
             [self.requestTable reloadData];
         }
             break;
