@@ -31,13 +31,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    //setupConfiguration before 
-    [VKSniffer setupConfiguration:configuration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    self.manager = manager;
-    
     //Start Sniffer
     [VKSniffer setupSnifferHandler:^(VKSnifferResult *result) {
         NSLog(@"%@",result);
@@ -73,28 +66,24 @@
 }
 
 -(void)afnetworkingTest{
-    
-    
+    //init Afnetworking manager
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //setupConfiguration before init manager
+    [VKSniffer setupConfiguration:configuration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    self.manager = manager;
     
     for (NSString *urlstr in [self networkApiArray]) {
-        
         NSURL *URL = [NSURL URLWithString:urlstr];
         NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-        
         NSURLSessionDataTask *dataTask = [self.manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-            if (error) {
-                NSLog(@"Error: %@", error);
-            } else {
-                NSLog(@"%@ %@", response, responseObject);
-            }
+
         }];
         [dataTask resume];
-        
     }
 }
 
 -(void)commenConnectionTest{
-    
     for (NSString *urlstr in [self networkApiArray]) {
         NSURL *url = [NSURL URLWithString:urlstr];
         NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url];
@@ -105,7 +94,6 @@
          }];
 
     }
-    
 }
 
 -(void)commenSessionTaskTest
@@ -124,9 +112,6 @@
 -(void)timertimer{
     [self commenConnectionTest];
 }
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

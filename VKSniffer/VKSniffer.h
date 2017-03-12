@@ -87,7 +87,7 @@ typedef void(^VKSnifferHandler)(VKSnifferResult *result);
 
 + (void)removeSnifferResult;
 
-//Afnetworking 3.0 need
+//Use this for custom Session such as Afnetworking 3.0 
 + (void)setupConfiguration:(NSURLSessionConfiguration *)config;
 //option
 + (void)setupSnifferHandler:(VKSnifferHandler)callback;
