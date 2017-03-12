@@ -60,9 +60,7 @@
     return @[@"https://api.github.com/users/xmartlabs",
              @"https://api.github.com/users/xmartlabs/broke",
              @"https://api.github.com/users/xmartlabs/repos",
-             @"https://api.github.com/users/xmartlabs/followers",
-             @"https://appwk.baidu.com/naapi/iap/userbankinfo?uid=bd_0&from=ios_appstore",
-             @"https://appwk.baidu.com/naapi/iap/userbankinfo?uid=bd_0&from=ios_appstore&app_ua=Simulator&ua=bd_1334_750_Simulator_3.4.9_9.2&Bdi_bear=wifi&app_ver=0.0.0&sys_ver=9.2&screen=750_1334&opid=wk_na"];
+             @"https://api.github.com/users/xmartlabs/followers"];
 }
 
 -(void)afnetworkingTest{
