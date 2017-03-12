@@ -105,8 +105,8 @@ static id __singleton__;
 {
     if (config) {
         NSMutableArray *mProtocolClasses = [[NSMutableArray alloc]initWithArray:config.protocolClasses];
-        [mProtocolClasses addObject:[VKSnifferProtocol class]];
-        config.protocolClasses = [mProtocolClasses copy];
+        [mProtocolClasses insertObject:[VKSnifferProtocol class] atIndex:0];
+        config.protocolClasses = [NSArray arrayWithArray:mProtocolClasses];
     }
     
 }

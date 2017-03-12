@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BD17D08734CC27D32B7325B /* libPods-VKSnifferDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE2D964D7340892D1C836BED /* libPods-VKSnifferDemo.a */; };
 		6CA85A6D1E6D538B00FD9EDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A6C1E6D538B00FD9EDF /* main.m */; };
 		6CA85A701E6D538B00FD9EDF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A6F1E6D538B00FD9EDF /* AppDelegate.m */; };
 		6CA85A731E6D538B00FD9EDF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85A721E6D538B00FD9EDF /* ViewController.m */; };
@@ -47,6 +48,9 @@
 		6CA85AA11E73A47900FD9EDF /* VKSnifferCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKSnifferCell.m; sourceTree = "<group>"; };
 		6CA85AA31E73A88000FD9EDF /* VKSnifferResult+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VKSnifferResult+UI.h"; sourceTree = "<group>"; };
 		6CA85AA41E73A88000FD9EDF /* VKSnifferResult+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VKSnifferResult+UI.m"; sourceTree = "<group>"; };
+		90901BD52555F2E52065544C /* Pods-VKSnifferDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKSnifferDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-VKSnifferDemo/Pods-VKSnifferDemo.release.xcconfig"; sourceTree = "<group>"; };
+		BE715BB1A2D7A0D49B22CFC9 /* Pods-VKSnifferDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKSnifferDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VKSnifferDemo/Pods-VKSnifferDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		DE2D964D7340892D1C836BED /* libPods-VKSnifferDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VKSnifferDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BD17D08734CC27D32B7325B /* libPods-VKSnifferDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +72,8 @@
 				6CA85A821E6D53A400FD9EDF /* VKSniffer */,
 				6CA85A6A1E6D538B00FD9EDF /* VKSnifferDemo */,
 				6CA85A691E6D538B00FD9EDF /* Products */,
+				AB4E6DAEF47D835EFE48AD69 /* Pods */,
+				B9CAFC5A4B20A575DC5F5DC5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,6 +139,23 @@
 			path = ../VKSnifferUI;
 			sourceTree = "<group>";
 		};
+		AB4E6DAEF47D835EFE48AD69 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BE715BB1A2D7A0D49B22CFC9 /* Pods-VKSnifferDemo.debug.xcconfig */,
+				90901BD52555F2E52065544C /* Pods-VKSnifferDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B9CAFC5A4B20A575DC5F5DC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DE2D964D7340892D1C836BED /* libPods-VKSnifferDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -139,9 +163,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6CA85A7F1E6D538B00FD9EDF /* Build configuration list for PBXNativeTarget "VKSnifferDemo" */;
 			buildPhases = (
+				8C974F2D7E32942694B5876C /* [CP] Check Pods Manifest.lock */,
 				6CA85A641E6D538B00FD9EDF /* Sources */,
 				6CA85A651E6D538B00FD9EDF /* Frameworks */,
 				6CA85A661E6D538B00FD9EDF /* Resources */,
+				559D93598BC802070A411630 /* [CP] Embed Pods Frameworks */,
+				FCB7CDC287A7FDB17DE9A1ED /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -197,6 +224,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		559D93598BC802070A411630 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VKSnifferDemo/Pods-VKSnifferDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C974F2D7E32942694B5876C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FCB7CDC287A7FDB17DE9A1ED /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VKSnifferDemo/Pods-VKSnifferDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6CA85A641E6D538B00FD9EDF /* Sources */ = {
@@ -330,6 +405,7 @@
 		};
 		6CA85A801E6D538B00FD9EDF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE715BB1A2D7A0D49B22CFC9 /* Pods-VKSnifferDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = VKSnifferDemo/Info.plist;
@@ -341,6 +417,7 @@
 		};
 		6CA85A811E6D538B00FD9EDF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90901BD52555F2E52065544C /* Pods-VKSnifferDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = VKSnifferDemo/Info.plist;

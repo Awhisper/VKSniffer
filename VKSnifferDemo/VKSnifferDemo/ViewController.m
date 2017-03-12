@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "VKSniffer+UI.h"
-
+#import <AFNetworking/AFNetworking.h>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -21,6 +21,8 @@
 
 @property (nonatomic,strong) NSTimer *timer;
 
+@property (nonatomic,strong) AFURLSessionManager *manager;
+
 @end
 
 @implementation ViewController
@@ -28,6 +30,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //setupConfiguration before 
+    [VKSniffer setupConfiguration:configuration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    self.manager = manager;
+    
+    //Start Sniffer
+    [VKSniffer setupSnifferHandler:^(VKSnifferResult *result) {
+        NSLog(@"%@",result);
+    }];
+    [VKSniffer startSniffer];
     
     [self commenSessionTaskTest];
     [self commenConnectionTest];
@@ -59,20 +74,30 @@
 
 -(void)afnetworkingTest{
     
+    
+    
+    for (NSString *urlstr in [self networkApiArray]) {
+        
+        NSURL *URL = [NSURL URLWithString:urlstr];
+        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+        
+        NSURLSessionDataTask *dataTask = [self.manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+            if (error) {
+                NSLog(@"Error: %@", error);
+            } else {
+                NSLog(@"%@ %@", response, responseObject);
+            }
+        }];
+        [dataTask resume];
+        
+    }
 }
 
 -(void)commenConnectionTest{
     
     for (NSString *urlstr in [self networkApiArray]) {
         NSURL *url = [NSURL URLWithString:urlstr];
-        
-        
         NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url];
-        
-        //创建一个队列（默认添加到该队列中的任务异步执行）
-        //NSOperationQueue *queue=[[NSOperationQueue alloc]init];
-        
-        //获取一个主队列
         NSOperationQueue *queue=[NSOperationQueue mainQueue];
         [NSURLConnection sendAsynchronousRequest:req queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
          {

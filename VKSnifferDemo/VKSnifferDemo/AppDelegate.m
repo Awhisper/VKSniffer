@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "VKSniffer.h"
+
 @interface AppDelegate ()
 
 @end
@@ -17,10 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [VKSniffer setupSnifferHandler:^(VKSnifferResult *result) {
-        NSLog(@"%@",result);
-    }];
-    [VKSniffer startSniffer];
     return YES;
 }
 
