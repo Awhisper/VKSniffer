@@ -35,7 +35,8 @@
 
 +(void)hideSnifferView
 {
-    [VKSnifferWindow hideSnifferView];
+    [[VKSniffer singleton].snifferWindow hideSnifferView];
+    [[VKSniffer singleton].snifferWindow setHidden:true];
     [VKSniffer singleton].snifferWindow = nil;
 }
 

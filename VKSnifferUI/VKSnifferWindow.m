@@ -66,21 +66,20 @@
 }
 
 +(void)hideSnifferView{
-    
+
 }
 
 
 -(void)hideSnifferView{
-    [UIView animateWithDuration:0.3 animations:^{
-        self.rootViewController.view.frame = [UIScreen mainScreen].bounds;
-        self.rootViewController.view.alpha = 0.0f;
-        self.frame = [UIScreen mainScreen].bounds;
-    } completion:^(BOOL finished) {
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.rootViewController.view.frame = [UIScreen mainScreen].bounds;
+//        self.rootViewController.view.alpha = 0.0f;
+//        self.frame = [UIScreen mainScreen].bounds;
+//    } completion:^(BOOL finished) {
         [self.preWindow makeKeyAndVisible];
-        self.preWindow = nil;
         self.rootViewController = nil;
         self.snifferVC = nil;
-    }];
+//    }];
 }
 
 /*

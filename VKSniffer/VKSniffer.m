@@ -50,13 +50,17 @@
         NSString *dataStr = [[NSJSONSerialization JSONObjectWithData:self.data options:kNilOptions error:nil] description];
         [pstr appendString:@"responeData:"];
         [pstr appendString:@"\r\n"];
-        [pstr appendString:dataStr];
+        if (dataStr) {
+            [pstr appendString:dataStr];
+        }
         [pstr appendString:@"\r\n"];
     }
     
     
     return [pstr copy];
 }
+
+
 
 -(NSString *)detailInfo{
     return self.description;
