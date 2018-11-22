@@ -30,7 +30,7 @@ static NSString * const VKSnifferProtocolKey = @"VKSnifferProtocolKey";
     
     //Post请求 body 会有问题因此抛弃
     if ([request.HTTPMethod isEqualToString:@"POST"]) {
-        return NO;
+        return true;
     }
     
     //只处理http和https请求

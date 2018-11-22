@@ -9,6 +9,8 @@
 #import "VKSnifferViewController.h"
 #import "VKSniffer+UI.h"
 #import "VKSnifferCell.h"
+#import "NSString+SKStringExtention.h"
+
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -86,9 +88,12 @@
 
 #pragma mark tableview
 -(void)setupTableView{
-    _requestTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64,VKSnifferViewControllerUIWidth, VKSnifferViewControllerUIHeight - 20)];
+    _requestTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64,VKSnifferViewControllerUIWidth, VKSnifferViewControllerUIHeight  - 64)];
     _requestTable.delegate = self;
     _requestTable.dataSource = self;
+    _requestTable.estimatedRowHeight = 0;
+    _requestTable.estimatedSectionHeaderHeight = 0;
+    _requestTable.estimatedSectionFooterHeight = 0;
     _requestTable.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_requestTable];
 }
@@ -145,10 +150,17 @@
     VKSnifferResult *result = resultArr[trueIndex];
     NSData *reqData = result.data;
     NSString *strdata = [[NSJSONSerialization JSONObjectWithData:reqData options:kNilOptions error:nil] description];
-    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Response Detail" message:strdata delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Copy", nil];
-    [alert show];
-    NSString *pasteboardstr = [result description];
-    self.pasteboardString = pasteboardstr;
+    NSString *chineseContent = [NSString logChinese:strdata];
+    if (chineseContent != nil) {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Response Detail" message:chineseContent delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Copy", nil];
+        [alert show];
+        self.pasteboardString = chineseContent;
+    }else{
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Response Detail" message:strdata delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Copy", nil];
+        [alert show];
+        self.pasteboardString = strdata;
+    }
+
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -170,7 +182,7 @@
     
     UILabel *titlelb = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, VKSnifferViewControllerUIWidth, 44)];
     titlelb.textColor = [UIColor whiteColor];
-    titlelb.text = @"VKSniffer";
+    titlelb.text = @"网络日志";
     [self.view addSubview:titlelb];
     titlelb.textAlignment = NSTextAlignmentCenter;
     titlelb.font = [UIFont boldSystemFontOfSize:titlelb.font.pointSize];

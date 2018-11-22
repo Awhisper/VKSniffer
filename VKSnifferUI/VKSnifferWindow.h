@@ -13,5 +13,5 @@
 + (VKSnifferWindow *)showSnifferView;
 
 + (void)hideSnifferView;
-
+-(void)hideSnifferView;
 @end
